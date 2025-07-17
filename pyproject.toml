@@ -1,0 +1,14 @@
+[project]
+name = "rinha-backend-3-v2"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "asyncpg>=0.30.0",
+    "fastapi[all]>=0.116.1",
+    "httpx>=0.28.1",
+    "psycopg2-binary>=2.9.10",
+    "redis>=6.2.0",
+    "sqlalchemy[asyncio]>=2.0.41",
+]
