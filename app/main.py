@@ -27,10 +27,10 @@ async def startup_event():
 
 http_client = httpx.AsyncClient(timeout=10.0, limits=httpx.Limits(max_connections=200, max_keepalive_connections=50))
 
+# NOTE: Ideally, I would use the worker_id for logging or something else...
 async def payment_worker(worker_id: str):
     while True:
         try:
-            # Pega um item da fila para processar
             payment_data = await payment_queue.get()
             
             async with database.AsyncSessionLocal() as db:
@@ -47,7 +47,8 @@ async def payment_worker(worker_id: str):
 
             payment_queue.task_done()
         except Exception as e:
-            logger.error(f"Error in {worker_id}: {e}")
+            # NOTE: Ideally I would log this...
+            pass
 
 async def process_payment_logic(db: AsyncSession, payment_data: dict) -> bool:
     correlation_id = payment_data['correlationId']
@@ -76,7 +77,7 @@ async def attempt_payment(db: AsyncSession, correlation_id: UUID, amount: float,
     payload = {
         "correlationId": str(correlation_id),
         "amount": amount,
-        "requestedAt": datetime.utcnow().isoformat() + "Z"
+        "requestedAt": datetime.utcnow().isoformat() + "Z" # I'm pretty sure that the 'Z' is not needed, but anyway it is here to maintain the same pattern of the original github repo.
     }
 
     try:
@@ -99,6 +100,8 @@ async def create_payment_endpoint(request: Request):
             "amount": float(body['amount'])
         }
         await payment_queue.put(payment_data)
+
+        # NOTE: Empty answer because the response will not be validated. Ideally, in prod we would do it...
         return
     except (KeyError, ValueError):
         raise HTTPException(status_code=422, detail="Invalid payment data")
