@@ -1,0 +1,8 @@
+{
+    "name": "Marcelo Eduardo Benencase",
+    "social": ["https://www.linkedin.com/in/marcelo-eduardo-benencase-87548893/"],
+    "source-code-repo": "https://github.com/debora-zan/rinha-de-backend-2025",
+    "langs": ["python"],
+    "storages": ["postgresql", "redis"],
+    "load-balancers": ["nginx"]
+}
