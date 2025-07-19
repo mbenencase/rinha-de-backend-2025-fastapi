@@ -1,6 +1,6 @@
 services:
   api1:
-    build: .
+    image: mbenencase96/rinha-de-backend-2025-fastapi:latest
     hostname: api1
     environment:
       - DATABASE_URL=postgresql+asyncpg://rinha:rinha@db/rinha
@@ -20,7 +20,7 @@ services:
           memory: "100MB"
 
   api2:
-    build: .
+    image: mbenencase96/rinha-de-backend-2025-fastapi:latest
     hostname: api2
     environment:
       - DATABASE_URL=postgresql+asyncpg://rinha:rinha@db/rinha
